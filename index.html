@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>The Painted Narrative | Shivam</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Cormorant+Garamond:wght@300;400;500;600&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    body {
+      background: #0b0907;
+      color: #efe6d2;
+      font-family: 'Cormorant Garamond', serif;
+      overflow-x: hidden;
+      line-height: 1.7;
+    }
+
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background-image: url('https://images.unsplash.com/photo-1516528387618-afa90b13e000?q=80&w=1200&auto=format&fit=crop');
+      opacity: 0.05;
+      z-index: -2;
+      background-size: cover;
+      filter: grayscale(100%);
+    }
+
+    body::after {
+      content: "";
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(
+        to bottom,
+        rgba(255,255,255,0.015),
+        rgba(255,255,255,0.015) 1px,
+        transparent 1px,
+        transparent 3px
+      );
+      pointer-events: none;
+      z-index: -1;
+    }
+
+    header {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      padding: 40px 20px;
+      background: linear-gradient(to bottom, rgba(0,0,0,0.78), rgba(11,9,7,0.96)), url('https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1600&auto=format&fit=crop');
+      background-size: cover;
+      background-position: center;
+    }
+
+    .hero {
+      max-width: 900px;
+      animation: fadeIn 2s ease;
+    }
+
+    .hero h1 {
+      font-family: 'Cinzel', serif;
+      font-size: clamp(3rem, 8vw, 7rem);
+      letter-spacing: 6px;
+      margin-bottom: 20px;
+      color: #f0dfb1;
+      text-shadow: 0 0 30px rgba(255, 212, 130, 0.2);
+    }
+
+    .hero p {
+      font-size: 1.5rem;
+      color: #d8d1c0;
+      max-width: 700px;
+      margin: auto;
+    }
+
+    nav {
+      position: fixed;
+      top: 0;
+      width: 100%;
+      backdrop-filter: blur(8px);
+      background: rgba(0,0,0,0.45);
+      padding: 18px 40px;
+      z-index: 1000;
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+    }
+
+    nav a {
+      color: #f0dfb1;
+      text-decoration: none;
+      font-family: 'Cinzel', serif;
+      letter-spacing: 2px;
+      transition: 0.3s;
+    }
+
+    nav a:hover {
+      color: white;
+    }
+
+    section {
+      padding: 100px 10%;
+    }
+
+    .section-title {
+      font-family: 'Cinzel', serif;
+      font-size: 3rem;
+      margin-bottom: 50px;
+      color: #f0dfb1;
+      text-align: center;
+    }
+
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 40px;
+    }
+
+    .card {
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 24px;
+      overflow: hidden;
+      transition: 0.4s ease;
+      backdrop-filter: blur(10px);
+    }
+
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 0 40px rgba(255,215,130,0.08);
+    }
+
+    .card img {
+      width: 100%;
+      height: 420px;
+      object-fit: cover;
+      filter: contrast(1.05) brightness(0.9);
+    }
+
+    .card-content {
+      padding: 30px;
+    }
+
+    .card-content h3 {
+      font-size: 2rem;
+      margin-bottom: 15px;
+      color: #f3dfb3;
+    }
+
+    .card-content p {
+      font-size: 1.2rem;
+      color: #ddd5c6;
+    }
+
+    .story-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+    }
+
+    .story-card {
+      padding: 40px;
+      border-radius: 24px;
+      background: linear-gradient(145deg, rgba(255,255,255,0.04), rgba(255,255,255,0.01));
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: 0.3s;
+    }
+
+    .story-card:hover {
+      border-color: rgba(255,215,130,0.3);
+      transform: translateY(-6px);
+    }
+
+    .story-card h3 {
+      font-size: 2rem;
+      margin-bottom: 20px;
+      color: #f0dfb1;
+    }
+
+    .story-card p {
+      font-size: 1.15rem;
+      color: #d8d1c0;
+    }
+
+    .external-links {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+      gap: 30px;
+      margin-top: 60px;
+    }
+
+    .external-box {
+      text-decoration: none;
+      color: inherit;
+      padding: 50px;
+      border-radius: 24px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid rgba(255,255,255,0.08);
+      transition: 0.4s;
+    }
+
+    .external-box:hover {
+      transform: scale(1.03);
+      border-color: rgba(255,215,130,0.4);
+    }
+
+    .external-box h3 {
+      font-size: 2.3rem;
+      margin-bottom: 20px;
+      color: #f0dfb1;
+    }
+
+    .about {
+      max-width: 900px;
+      margin: auto;
+      text-align: center;
+      font-size: 1.4rem;
+      color: #d8d1c0;
+    }
+
+    footer {
+      padding: 60px 20px;
+      text-align: center;
+      color: #9b937f;
+      border-top: 1px solid rgba(255,255,255,0.08);
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @media(max-width: 768px) {
+      nav {
+        gap: 20px;
+        padding: 15px;
+        flex-wrap: wrap;
+      }
+
+      .hero p {
+        font-size: 1.1rem;
+      }
+
+      .card img {
+        height: 300px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!--
+  ======================================================
+  EASY EDIT GUIDE
+  ======================================================
+  To add more paintings later:
+
+  1. Upload image online OR keep in same folder
+  2. Replace image path inside:
+     <img src="YOUR_IMAGE.jpg">
+
+  3. Duplicate any .card block to add new artwork.
+
+  This website is intentionally designed like:
+  - an artistic journal
+  - a cinematic archive
+  - a vintage exhibition notebook
+  ======================================================
+  -->
+
+  <nav>
+    <a href="#gallery">Gallery</a>
+    <a href="#stories">Stories</a>
+    <a href="#about">About</a>
+    <a href="#contact">Contact</a>
+  </nav>
+
+  <header>
+    <div class="hero">
+      <h1>THE PAINTED NARRATIVE</h1>
+      <p>
+        Inspired by your original portfolio PDF, this experience blends editorial storytelling, vintage exhibition aesthetics and cinematic atmosphere into one immersive narrative journey.
+      </p>
+    </div>
+  </header>
+
+  <section id="gallery">
+    <h2 class="section-title" style="letter-spacing:8px;">THE GALLERY</h2>
+
+    <div style="max-width:1200px;margin:auto;text-align:center;margin-bottom:70px;">
+      <p style="font-size:1.4rem;color:#cbbd9a;max-width:850px;margin:auto;line-height:1.9;">
+        THE PAINTED NARRATIVE is a visual archive of memories, divinity, emotional fragmentation and human silence — inspired directly by your uploaded artistic portfolio.
+      </p>
+    </div>
+
+    <div class="gallery" style="align-items:start;">
+
+      <div class="card" style="transform:rotate(-1deg);">
+        <img src="WhatsApp Image 2026-04-15 at 11.43.24 PM (1).jpeg">
+        <div class="card-content">
+          <h3>Untitled Memory</h3>
+          <p>
+            A faceless feminine figure dissolves into smoke and silence — suspended between identity, memory and emotional disappearance.
+          </p>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:80px; transform:rotate(1deg);">
+        <img src="WhatsApp Image 2026-05-13 at 10.58.37 PM (1).jpeg">
+        <div class="card-content">
+          <h3>Sacred Shiva</h3>
+          <p>
+            A divine cinematic portrayal of Shiva emerging from darkness and flame, carrying stillness, destruction and transcendence together.
+          </p>
+        </div>
+      </div>
+
+      <div class="card" style="transform:rotate(-1deg); opacity:0.85;">
+        <img src="https://images.unsplash.com/photo-1517694712202-14dd9538aa97?q=80&w=1200&auto=format&fit=crop">
+        <div class="card-content">
+          <h3>The Last Sunrise</h3>
+          <p>
+            A final sunrise spreads across silent valleys reminding humanity that light is remembered only when it begins to disappear.
+          </p>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="stories">
+    <h2 class="section-title">STORIES & WORLDS</h2>
+
+    <div class="story-grid">
+
+      <div class="story-card">
+        <h3>When The Forest Listened</h3>
+        <p>
+          Krishna’s flute paused the forest into silence where birds hovered and peace lingered long after the melody vanished.
+        </p>
+      </div>
+
+      <div class="story-card">
+        <h3>Scent of a Soul</h3>
+        <p>
+          Desire becomes poison and devotion dissolves into emotional bioluminescence beneath the weight of longing.
+        </p>
+      </div>
+
+    </div>
+
+    <div class="external-links">
+
+      <a class="external-box" href="https://my-midnightstories-web.my.canva.site/dagw5iyiyne" target="_blank">
+        <h3>Midnight Stories</h3>
+        <p>
+          Explore dark cinematic stories, emotional narratives and surreal worlds through your immersive story universe.
+        </p>
+      </a>
+
+      <a class="external-box" href="https://www.wattpad.com/myworks/409277033-mirror-world-the-best-is-yet-to-come" target="_blank">
+        <h3>Mirror World</h3>
+        <p>
+          Enter the fractured reality of Mirror World — where transformation, mystery and hidden truths collide.
+        </p>
+      </a>
+
+    </div>
+  </section>
+
+  <section id="about">
+    <h2 class="section-title">THE ARTIST</h2>
+
+    <div class="about">
+      <p>
+        I believe in showing slices of life through paintings and stories. My work blends watercolours, acrylics, emotion and imagination to blur the boundary between reality and dreams.
+      </p>
+      <br><br>
+      <p>
+        With precision, I challenge the past, engage the present and redefine the future through visual storytelling.
+      </p>
+    </div>
+  </section>
+
+  <footer id="contact" style="background:rgba(255,255,255,0.02);">
+    <h3 style="font-family: Cinzel; margin-bottom: 20px; color: #f0dfb1;">
+      Get In Touch
+    </h3>
+
+    <p>Email: shivamvaradai2468@mail.com</p>
+    <br>
+    <p>The Painted Narrative © 2026</p>
+  </footer>
+
+</body>
+</html>
